@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", 'django-insecure-6l0up8y&^vp9+8%tvfpn#lxyui@ql+d!ap!fxuqk(tm7kt+*xr')
 
-DEBUG = os.getenv("DJANGO_DEBUG", False)
+DEBUG = os.getenv("DJANGO_DEBUG", True)
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ['*'])
 
@@ -17,13 +17,16 @@ DJANGO_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sessions',
 ]
 
 THIRD_PARTY_APPS = [
-
+    "drf_spectacular",
+    "drf_spectacular_sidecar",
 ]
 
 LOCAL_APPS = [
+    "apps.management",
     "apps.generator",
 ]
 
@@ -65,7 +68,7 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "PDF Generator API",
-    "DESCRIPTION": "Simple pdf generator restful api",
+    "DESCRIPTION": "Simple RESTful API for pdf generation. Uses Django Weasyprint package in the generation task",
     "VERSION": "0.1.0",
     "SERVE_INCLUDE_SCHEMA": True,
     # OTHER SETTINGS
@@ -119,5 +122,3 @@ MEDIA_URL = "media/"
 # media files
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
