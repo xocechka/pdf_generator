@@ -1,8 +1,8 @@
+from django.urls import path
 from rest_framework.routers import DefaultRouter
 from apps.generator.api import views
 
-
 router = DefaultRouter()
-router.register("generate", views.GeneratorView, basename="generator")
+router.register("", views.GeneratorViewV1, basename="generator")
 
 urlpatterns = router.urls

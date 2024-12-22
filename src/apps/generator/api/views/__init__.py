@@ -1,3 +1,3 @@
-from .generator import GeneratorView
+from .generator import GeneratorViewV1
 
-__all__ = ["GeneratorView"]
+__all__ = ["GeneratorViewV1"]
