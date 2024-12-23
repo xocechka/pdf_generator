@@ -22,4 +22,3 @@ class HTMLValidator:
 
 class PdfGenerationSerializer(serializers.Serializer):
     html = serializers.CharField(validators=[HTMLValidator()])
-    context = serializers.JSONField(required=False)
