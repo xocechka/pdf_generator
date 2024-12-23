@@ -11,7 +11,7 @@ swagger = [
 
 api = [
     path("", include(swagger)),
-    path("", include("apps.generator.api.urls"), name="generator"),
+    path("generator/", include("apps.generator.api.urls"), name="generator"),
 ]
 
 urlpatterns = [swagger + api]
