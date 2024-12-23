@@ -20,6 +20,6 @@ class HTMLValidator:
             raise exceptions.ValidationError(self.message, code=self.code) from e
 
 
-class PdfGenerationPostSerializerV1(serializers.Serializer):
+class PdfGenerationSerializer(serializers.Serializer):
     html = serializers.CharField(validators=[HTMLValidator()])
     context = serializers.JSONField(required=False)
