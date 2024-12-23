@@ -1,4 +1,4 @@
-dauto==1.0.0
+dauto @ git+https://github.com/gaspect/dauto.git
 Django==5.1.4
 djangorestframework==3.15.2
 drf-spectacular==0.28.0
