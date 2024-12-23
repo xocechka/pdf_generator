@@ -66,8 +66,8 @@ COPY --from=builder /venv /venv
 
 # Copy the rest of the application code
 WORKDIR /app
+COPY ./src/ ./src
 COPY ./entrypoint.sh .
-COPY ./src/ .
 
 # Ensure entrypoint.sh is executable
 RUN chmod +x /app/entrypoint.sh
