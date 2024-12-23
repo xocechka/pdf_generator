@@ -16,6 +16,7 @@ ENV PYTHONFAULTHANDLER=1 \
 RUN apk --no-cache add \
     build-base \
     gcc \
+    git \
     libc-dev \
     libffi-dev \
     cairo-dev \
@@ -48,6 +49,7 @@ ENV PYTHONFAULTHANDLER=1 \
 
 # Install runtime dependencies
 RUN apk --no-cache add \
+    git \
     py3-cffi \
     cairo \
     pango \
@@ -64,7 +66,7 @@ COPY --from=builder /venv /venv
 
 # Copy the rest of the application code
 WORKDIR /app
-COPY ./docker/entrypoint.sh .
+COPY ./entrypoint.sh .
 COPY ./src/ .
 
 # Ensure entrypoint.sh is executable
