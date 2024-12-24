@@ -1,7 +1,7 @@
-from rest_framework.routers import DefaultRouter
+from django.urls import path
+
 from apps.generator.api import views
 
-router = DefaultRouter()
-router.register("", views.GeneratorAPIView, basename="generator")
-
-urlpatterns = router.urls
+urlpatterns = [
+    path("generate", views.GeneratorAPIView.as_view(), name="generate"),
+]
