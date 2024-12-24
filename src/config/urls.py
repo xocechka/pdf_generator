@@ -5,17 +5,18 @@ from drf_spectacular.views import SpectacularSwaggerView, SpectacularAPIView
 
 swagger = [
     # Swagger drf-spectacular
-    path("", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
+    path("docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
 ]
 
 api = [
     path("", include(swagger)),
-    path("generator/", include("apps.generator.api.urls"), name="generator"),
+    path("", include("apps.generator.api.urls"), name="generator"),
 ]
 
-urlpatterns = [swagger + api]
+urlpatterns = [
+    path("api/", include(api)),
+]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += [path("", include(swagger))]
