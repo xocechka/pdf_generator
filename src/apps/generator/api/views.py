@@ -22,9 +22,10 @@ class PDFRenderer(renderers.BaseRenderer):
         return pdf_file
 
 
-
 class GeneratorAPIView(APIView):
     renderer_classes = [PDFRenderer]
+
+    serializer_class = PdfGenerationSerializer
 
     @extend_schema(
         tags=["Generation"],
@@ -36,7 +37,9 @@ class GeneratorAPIView(APIView):
     )
     def post(self, request, *args, **kwargs):
 
-        serializer = PdfGenerationSerializer(data=request.data, context={"request": request})
+        serializer = self.serializer_class(
+            data=request.data, context={"request": request}
+        )
         serializer.is_valid(raise_exception=True)
 
         return Response(
