@@ -6,18 +6,21 @@ from dauto.database import database
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", 'django-insecure-6l0up8y&^vp9+8%tvfpn#lxyui@ql+d!ap!fxuqk(tm7kt+*xr')
+SECRET_KEY = os.getenv(
+    "DJANGO_SECRET_KEY",
+    "django-insecure-6l0up8y&^vp9+8%tvfpn#lxyui@ql+d!ap!fxuqk(tm7kt+*xr",
+)
 
 DEBUG = os.getenv("DJANGO_DEBUG", True)
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ['*'])
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ["*"])
 
 DJANGO_APPS = [
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sessions',
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.sessions",
 ]
 
 THIRD_PARTY_APPS = [
@@ -33,33 +36,33 @@ LOCAL_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = "config.wsgi.application"
 
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
@@ -79,16 +82,12 @@ SPECTACULAR_SETTINGS = {
     "SWAGGER_UI_SETTINGS": """{
         deepLinking: true,
         persistAuthorization: true,
-        displayOperationId: false,
-        docExpansion: "none",
         presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
         layout: "StandaloneLayout",
-        tagsSorter: "alpha",
-        operationsSorter: "alpha",
         filter: true,
         displayRequestDuration: true,
         urls: [
-            {url: "api/v1/schema/", name: "v1"},
+            {url: "/api/schema/", name: "v1"},
         ]}
     """,
     "COMPONENT_SPLIT_REQUEST": True,
@@ -97,15 +96,15 @@ SPECTACULAR_SETTINGS = {
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {'default': database("sqlite:///db.sqlite3")}
+DATABASES = {"default": database("sqlite:///db.sqlite3")}
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
