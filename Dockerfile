@@ -51,6 +51,7 @@ ENV PYTHONFAULTHANDLER=1 \
 RUN apk --no-cache add \
     git \
     py3-cffi \
+    curl \
     cairo \
     pango \
     gdk-pixbuf \
