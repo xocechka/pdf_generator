@@ -16,6 +16,7 @@ api = [
 
 urlpatterns = [
     path("api/", include(api)),
+    path("healthcheck/", include("health_check.urls")),
 ]
 
 if settings.DEBUG:
