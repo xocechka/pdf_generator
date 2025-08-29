@@ -13,7 +13,7 @@ SECRET_KEY = os.getenv(
 
 DEBUG = os.getenv("DJANGO_DEBUG", True)
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ["*"])
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ["*"]).split(",")
 
 DJANGO_APPS = [
     "django.contrib.auth",
