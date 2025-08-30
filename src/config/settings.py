@@ -13,7 +13,7 @@ SECRET_KEY = os.getenv(
 
 DEBUG = os.getenv("DJANGO_DEBUG", True)
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", ["*"])
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 
 DJANGO_APPS = [
     "django.contrib.auth",
@@ -72,7 +72,7 @@ REST_FRAMEWORK = {
 SPECTACULAR_SETTINGS = {
     "TITLE": "PDF Generator API",
     "DESCRIPTION": "Simple RESTful API for pdf generation. Uses Django Weasyprint package in the generation task",
-    "VERSION": "0.1.0",
+    "VERSION": "0.3.2",
     "SERVE_INCLUDE_SCHEMA": True,
     # OTHER SETTINGS
     "SWAGGER_UI_DIST": "SIDECAR",  # shorthand to use the sidecar instead
