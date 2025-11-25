@@ -1,9 +1,14 @@
 # === Stage 1: Build dependencies ===
 
-# Use an official Python runtime as a base image
-FROM python:3.12-alpine AS builder
+# Allow switching builder image
+ARG BASE_BUILDER_IMAGE=python:3.12-alpine
+ARG BASE_FINAL_IMAGE=python:3.12-alpine
 
-RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+FROM ${BASE_BUILDER_IMAGE} AS builder
+
+# Build args
+ARG ALPINE_MIRROR=https://dl-cdn.alpinelinux.org/alpine
+ARG PYPI_REGISTRY=https://pypi.org/simple
 
 ENV PYTHONFAULTHANDLER=1 \
     PYTHONUNBUFFERED=1 \
@@ -12,7 +17,10 @@ ENV PYTHONFAULTHANDLER=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=on \
     PIP_DEFAULT_TIMEOUT=100
 
-# Install build dependencies and necessary packages
+# Configure Alpine repository dynamically
+RUN echo "${ALPINE_MIRROR}/edge/community" >> /etc/apk/repositories
+
+# Install build dependencies
 RUN apk --no-cache add \
     build-base \
     gcc \
@@ -25,19 +33,21 @@ RUN apk --no-cache add \
     libxml2-dev \
     libxslt-dev \
     && python -m venv /venv \
-    && /venv/bin/pip install --upgrade pip
+    && /venv/bin/pip install --upgrade pip --index-url ${PYPI_REGISTRY}
 
-# Create a virtual environment and install Python dependencies
+# Install Python dependencies inside virtualenv
 WORKDIR /app
 COPY ./src/requirements.txt /app/
-RUN /venv/bin/pip install -r requirements.txt
+RUN /venv/bin/pip install -r requirements.txt --index-url ${PYPI_REGISTRY}
 
 # === Stage 2: Final Image ===
 
-# Use a minimal image
-FROM python:3.12-alpine
+# Allow switching final runtime image
+FROM ${BASE_FINAL_IMAGE}
 
-RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+# Reuse Alpine mirror
+ARG ALPINE_MIRROR
+RUN echo "${ALPINE_MIRROR}/edge/community" >> /etc/apk/repositories
 
 # Set environment variables
 ENV PYTHONFAULTHANDLER=1 \
@@ -62,22 +72,22 @@ RUN apk --no-cache add \
     && update-ms-fonts && fc-cache -f \
     && apk del msttcorefonts-installer
 
-# Copy virtual environment from the builder stage
+# Copy virtual environment from builder stage
 COPY --from=builder /venv /venv
 
-# Copy the rest of the application code
+# Copy application code
 WORKDIR /app
 COPY ./src/ ./src
-COPY ./entrypoint.sh .
+COPY ./entrypoint.sh ./
 
 # Ensure entrypoint.sh is executable
 RUN chmod +x /app/entrypoint.sh
 
-# Expose port 8000
+# Expose port
 EXPOSE 8000
 
-# Set the entry point
-ENTRYPOINT ["sh", "./entrypoint.sh"]
-
-# Use the virtual environment for running the application
+# Use virtual environment
 ENV PATH="/venv/bin:$PATH"
+
+# Set entrypoint
+ENTRYPOINT ["sh", "./entrypoint.sh"]
